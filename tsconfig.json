@@ -4,10 +4,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@Components/*": ["src/components/*"],
-      "@Screens*": ["src/screens*"],
-      "@Redux/*": ["src/redux/*"],
-      "@Assets/*": ["src/assets/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
