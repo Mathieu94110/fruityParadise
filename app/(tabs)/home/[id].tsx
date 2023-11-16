@@ -1,5 +1,7 @@
+import FruitCardDetails from '@/components/fruitCardDetails';
 import { RootState } from '@/store';
 import { fruityType } from '@/types';
+import { Image } from 'expo-image';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
@@ -11,13 +13,11 @@ export default function FruitDetails() {
   const local = useLocalSearchParams();
 
   useEffect(() => {
-    const fruitInfo = fruit.find((f: fruityType) => f.id !== Number(local));
-    if (fruitInfo) {
-      setFruitDetails({
-        ...fruitInfo,
-      });
-    }
-  }, [local]);
+    const fruitInfo = fruit.find((f: fruityType) => f.id === Number(local.id))!;
+    setFruitDetails({
+      ...fruitInfo,
+    });
+  }, []);
 
   return fruitsDetails ? (
     <View>
@@ -26,18 +26,8 @@ export default function FruitDetails() {
           title: fruitsDetails.name,
         }}
       />
-      <View>
-        <Text style={styles.name}>Name: {fruitsDetails.name}</Text>
-        <Text style={styles.text}>Origin: {fruitsDetails.family}</Text>
-        <Text style={styles.text}>Temperament: {fruitsDetails.order}</Text>
-        <Text style={styles.text}>Origin: {fruitsDetails.genus}</Text>
-        <View>
-          {Object.entries(fruitsDetails.nutritions).map(([key, value]) => (
-            <Text key={key}>
-              {key}: {value}
-            </Text>
-          ))}
-        </View>
+      <View style={styles.container}>
+        <FruitCardDetails fruitsDetails={fruitsDetails} />
       </View>
     </View>
   ) : (
@@ -48,16 +38,11 @@ export default function FruitDetails() {
 }
 
 const styles = StyleSheet.create({
-  name: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    margin: 10,
-  },
-  text: {
-    fontSize: 16,
-    textAlign: 'center',
-    margin: 10,
+  container: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   spinnerContainer: {
     flex: 1,

@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native';
 import React from 'react';
+import { Stack } from 'expo-router';
 
-const Page = () => {
+export default function Page() {
   return (
     <View>
+      <Stack.Screen options={{ title: 'Favorites' }} />
       <Text>Favorites</Text>
     </View>
   );
-};
-
-export default Page;
+}

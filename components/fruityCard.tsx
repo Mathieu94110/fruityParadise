@@ -1,39 +1,21 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  // Image,
-  Platform,
-  Pressable,
-} from 'react-native';
+import { Text, View, StyleSheet, Platform, Pressable } from 'react-native';
+import { Image } from 'expo-image';
 import { Link } from 'expo-router';
-import { getFamilyDesign, getFruitImg } from '@/utils/cardCustomDesign';
 import { fruityType } from '@/types';
 
 export default function FruityCard(props: fruityType) {
-  const { name, id, family, genus, order, ...rest } = props;
-  const { borderColor, emoji } = getFamilyDesign(family);
+  const { name, id, ...rest } = props;
   return (
     <Link href={`/home/${id}`} asChild>
-      <Pressable>
-        <View style={[styles.card, { borderColor }]}>
-          <View style={styles.textcontainer}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={styles.emoji}>{emoji}</Text>
-          </View>
-          {/* <Image
-        style={styles.image}
-        source={{ uri: getFruitImg[name].image }}
-        accessibilityLabel={`${name} pokeman`}
-        resizeMode="contain"
-      /> */}
-          <View style={styles.typeContainer}>
-            <View style={styles.badge}>
-              <Text style={styles.emoji}>Famille: {family}</Text>
-              <Text style={styles.typetext}>Genre: {genus}</Text>
-              <Text style={styles.typetext}>Ordre: {order}</Text>
-            </View>
-          </View>
+      <Pressable style={styles.itemContainer}>
+        <View>
+          <Text style={styles.nameText}>{name}</Text>
+        </View>
+        <View style={styles.tinyLogo}>
+          <Image
+            source="https://picsum.photos/seed/696/3000/2000"
+            contentFit="cover"
+          />
         </View>
       </Pressable>
     </Link>
@@ -41,50 +23,22 @@ export default function FruityCard(props: fruityType) {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 5,
-    borderWidth: 3,
-    margin: 16,
-    padding: 16,
-    ...Platform.select({
-      android: {
-        elevation: 5,
-      },
-    }),
-  },
-  textcontainer: {
+  itemContainer: {
+    paddingHorizontal: 20,
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 32,
-  },
-  name: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: 'blue',
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    marginBottom: 10,
-  },
-  typeContainer: {
-    marginBottom: 40,
     alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
-  emoji: {
-    fontSize: 30,
-    marginRight: 20,
-  },
-  badge: {
-    flexDirection: 'column',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    alignItems: 'flex-start',
-  },
-  typetext: {
-    fontSize: 20,
+  nameText: {
+    fontSize: 16,
     fontWeight: 'bold',
+  },
+  tinyLogo: {
+    width: 20,
+    height: 20,
   },
 });

@@ -7,8 +7,8 @@ import {
   FlatList,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { Stack } from 'expo-router';
 import type { AppDispatch, RootState } from '@/store';
-
 import { fetchAllFruity } from '@/store/fruitySlice';
 import { fruityType } from '@/types';
 import FruityCard from '@/components/fruityCard';
@@ -27,7 +27,7 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>All fruits list</Text>
+      <Stack.Screen options={{ title: 'Fruits list' }} />
       <View style={{ marginVertical: 40 }}>
         {data.length ? (
           <FlatList
@@ -50,12 +50,6 @@ export default function Page() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   spinnerContainer: {
     flex: 1,
     justifyContent: 'center',

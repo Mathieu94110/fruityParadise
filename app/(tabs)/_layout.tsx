@@ -7,6 +7,7 @@ function Layout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
+        headerShown: false,
       }}
     >
       <Tabs.Screen
