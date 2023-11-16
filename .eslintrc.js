@@ -26,6 +26,10 @@ module.exports = {
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   rules: {
     quotes: ['error', 'single', { avoidEscape: true }],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'react/display-name': 'off',

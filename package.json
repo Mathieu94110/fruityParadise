@@ -12,6 +12,19 @@
     "lint:fix": "eslint -fix .",
     "format": "prettier --check ."
   },
+  "eslintConfig": {
+    "rules": {
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".tsx",
+            ".jsx"
+          ]
+        }
+      ]
+    }
+  },
   "jest": {
     "preset": "jest-expo",
     "transform": {

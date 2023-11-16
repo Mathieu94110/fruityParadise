@@ -6,13 +6,14 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import type { AppDispatch, RootState } from '@/store';
 import { useSelector, useDispatch } from 'react-redux';
+import type { AppDispatch, RootState } from '@/store';
+
 import { fetchAllFruity } from '@/store/fruitySlice';
 import { fruityType } from '@/types';
 import FruityCard from '@/components/fruityCard';
 
-const Page = () => {
+export default function Page() {
   const { data, isError } = useSelector((state: RootState) => state.fruity);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -26,7 +27,7 @@ const Page = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Liste des fruits</Text>
+      <Text style={styles.title}>All fruits list</Text>
       <View style={{ marginVertical: 40 }}>
         {data.length ? (
           <FlatList
@@ -37,7 +38,7 @@ const Page = () => {
             keyExtractor={(item: fruityType) => String(item.id)}
           />
         ) : isError ? (
-          <Text>Problème survenu lors du chargements des données</Text>
+          <Text>Problem occurred while loading data</Text>
         ) : (
           <View style={styles.spinnerContainer}>
             <ActivityIndicator size="large" color="#00ff00" />
@@ -46,7 +47,7 @@ const Page = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -64,5 +65,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-export default Page;

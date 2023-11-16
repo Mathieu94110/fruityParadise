@@ -1,24 +1,42 @@
-import { Text, View, StyleSheet, Platform } from 'react-native';
-import { getFamilyDetails } from '@/utils/getFamilyDetails';
+import {
+  Text,
+  View,
+  StyleSheet,
+  // Image,
+  Platform,
+  Pressable,
+} from 'react-native';
+import { Link } from 'expo-router';
+import { getFamilyDesign, getFruitImg } from '@/utils/cardCustomDesign';
 import { fruityType } from '@/types';
 
 export default function FruityCard(props: fruityType) {
   const { name, id, family, genus, order, ...rest } = props;
-  const { borderColor, emoji } = getFamilyDetails(family);
+  const { borderColor, emoji } = getFamilyDesign(family);
   return (
-    <View style={[styles.card, { borderColor }]}>
-      <View style={styles.textcontainer}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.emoji}>{emoji}</Text>
-      </View>
-      <View style={styles.typeContainer}>
-        <View style={styles.badge}>
-          <Text style={styles.emoji}>Famille: {family}</Text>
-          <Text style={styles.typetext}>Genre: {genus}</Text>
-          <Text style={styles.typetext}>Ordre: {order}</Text>
+    <Link href={`/home/${id}`} asChild>
+      <Pressable>
+        <View style={[styles.card, { borderColor }]}>
+          <View style={styles.textcontainer}>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.emoji}>{emoji}</Text>
+          </View>
+          {/* <Image
+        style={styles.image}
+        source={{ uri: getFruitImg[name].image }}
+        accessibilityLabel={`${name} pokeman`}
+        resizeMode="contain"
+      /> */}
+          <View style={styles.typeContainer}>
+            <View style={styles.badge}>
+              <Text style={styles.emoji}>Famille: {family}</Text>
+              <Text style={styles.typetext}>Genre: {genus}</Text>
+              <Text style={styles.typetext}>Ordre: {order}</Text>
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+      </Pressable>
+    </Link>
   );
 }
 
@@ -30,12 +48,6 @@ const styles = StyleSheet.create({
     margin: 16,
     padding: 16,
     ...Platform.select({
-      ios: {
-        shadowOffset: { width: 2, heigth: 2 },
-        shadowColor: '#333',
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-      },
       android: {
         elevation: 5,
       },
@@ -51,10 +63,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: 'blue',
-  },
-  hp: {
-    fontSize: 20,
-    color: 'purple',
   },
   image: {
     width: '100%',
@@ -78,19 +86,5 @@ const styles = StyleSheet.create({
   typetext: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  movesContainer: {
-    marginBottom: 10,
-  },
-  movetext: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  weakcontainer: {
-    marginBottom: 10,
-  },
-  weaktext: {
-    fontWeight: 'bold',
-    fontSize: 18,
   },
 });
