@@ -1,46 +1,59 @@
 import { fruityType } from '@/types';
 import { Image } from 'expo-image';
 import { View, Text, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
+import { FRUITS_IMG } from '@/utils/cardCustomDesign';
 
 export default function FruitCardDetails({
   fruitsDetails,
 }: {
   fruitsDetails: fruityType;
 }) {
+  const cardDetailsWidth = Dimensions.get('window').width * 0.9;
+
   return (
-    <View>
-      <Text style={styles.headingText}>{fruitsDetails.name}</Text>
-      <View style={[styles.card, styles.cardElevated]}>
-        <Image
-          source={require('@/assets/images/fruit-test-img.jpg')}
-          style={styles.cardImage}
-        />
-        <View style={styles.cardBody}>
-          <Text style={styles.cardRow}>
-            <Text style={styles.subHeadingText}>Family</Text>{' '}
-            <Text style={styles.fruitsDetailsValue}>
-              {fruitsDetails.family}
+    <View style={styles.container}>
+      <View style={{ width: cardDetailsWidth }}>
+        <Text style={styles.headingText}>{fruitsDetails.name}</Text>
+        <View style={[styles.card, styles.cardElevated]}>
+          <Image
+            source={FRUITS_IMG[fruitsDetails.name]}
+            style={styles.cardImage}
+          />
+          <View style={styles.cardBody}>
+            <Text style={styles.cardRow}>
+              <Text style={styles.subHeadingText}>Family</Text>
+              {'  '}
+              <Text style={styles.fruitsDetailsValue}>
+                {fruitsDetails.family}
+              </Text>
             </Text>
-          </Text>
 
-          <Text style={styles.cardRow}>
-            <Text style={styles.subHeadingText}>Order</Text>{' '}
-            <Text style={styles.fruitsDetailsValue}>{fruitsDetails.order}</Text>
-          </Text>
+            <Text style={styles.cardRow}>
+              <Text style={styles.subHeadingText}>Order</Text>
+              {'  '}
+              <Text style={styles.fruitsDetailsValue}>
+                {fruitsDetails.order}
+              </Text>
+            </Text>
 
-          <Text style={styles.cardRow}>
-            <Text style={styles.subHeadingText}>Genus</Text>{' '}
-            <Text style={styles.fruitsDetailsValue}>{fruitsDetails.genus}</Text>
-          </Text>
-          <Text style={styles.nutritionsHeading}>Nutritions</Text>
-          <Text style={styles.cardNutritions}>
-            {Object.entries(fruitsDetails.nutritions).map(([key, value]) => (
-              <View style={styles.nutritionsItem} key={key}>
-                <Text style={styles.nutritionsItemKey}>{key}</Text>
-                <Text style={styles.nutritionsItemValue}>{value}g</Text>
-              </View>
-            ))}
-          </Text>
+            <Text style={styles.cardRow}>
+              <Text style={styles.subHeadingText}>Genus</Text>
+              {'  '}
+              <Text style={styles.fruitsDetailsValue}>
+                {fruitsDetails.genus}
+              </Text>
+            </Text>
+            <Text style={styles.nutritionsHeading}>Nutritions</Text>
+            <Text style={styles.cardNutritions}>
+              {Object.entries(fruitsDetails.nutritions).map(([key, value]) => (
+                <View style={styles.nutritionsItem} key={key}>
+                  <Text style={styles.nutritionsItemKey}>{key}</Text>
+                  <Text style={styles.nutritionsItemValue}>{value}g</Text>
+                </View>
+              ))}
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -48,20 +61,24 @@ export default function FruitCardDetails({
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    width: '100%',
+    marginHorizontal: 'auto',
+  },
   headingText: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   card: {
-    width: 350,
-    height: 400,
+    height: 420,
     borderRadius: 6,
     marginVertical: 12,
     marginHorizontal: 16,
   },
   cardElevated: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFF',
     elevation: 3,
     shadowOffset: {
       width: 1,
@@ -92,6 +109,7 @@ const styles = StyleSheet.create({
   fruitsDetailsValue: {
     fontSize: 16,
     fontWeight: '500',
+    color: '#FF385C',
   },
   nutritionsHeading: {
     fontSize: 20,
@@ -107,6 +125,7 @@ const styles = StyleSheet.create({
     padding: 4,
     borderColor: '#000',
     borderWidth: 1,
+    borderStyle: 'dashed',
     width: '100%',
     justifyContent: 'space-between',
   },
@@ -118,11 +137,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#FF385C',
   },
   nutritionsItemValue: {
     paddingLeft: 10,
     paddingRight: 10,
+    color: '#FF385C',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

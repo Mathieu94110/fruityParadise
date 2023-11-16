@@ -2,18 +2,18 @@ import { Text, View, StyleSheet, Platform, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { fruityType } from '@/types';
+import { FRUITS_IMG } from '@/utils/cardCustomDesign';
 
-export default function FruityCard(props: fruityType) {
+export default function FruityCard({ props }: fruityType) {
   const { name, id, ...rest } = props;
   return (
     <Link href={`/home/${id}`} asChild>
-      <Pressable style={styles.itemContainer}>
-        <View>
+      <Pressable>
+        <View style={styles.itemContainer}>
           <Text style={styles.nameText}>{name}</Text>
-        </View>
-        <View style={styles.tinyLogo}>
           <Image
-            source="https://picsum.photos/seed/696/3000/2000"
+            style={styles.tinyLogo}
+            source={FRUITS_IMG[name]}
             contentFit="cover"
           />
         </View>
@@ -24,21 +24,24 @@ export default function FruityCard(props: fruityType) {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    paddingHorizontal: 20,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#c2c2c2',
+    display: 'flex',
+    width: '75%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 16,
+    paddingBottom: 16,
   },
   nameText: {
     fontSize: 16,
     fontWeight: 'bold',
   },
   tinyLogo: {
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
+    borderRadius: 999,
   },
 });

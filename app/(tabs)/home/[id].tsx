@@ -1,23 +1,41 @@
+import FavoritesIcon from '@/components/favoritesIcon';
 import FruitCardDetails from '@/components/fruitCardDetails';
-import { RootState } from '@/store';
+import { AppDispatch, RootState } from '@/store';
+import { switchOnFavorites } from '@/store/favoritesSlice';
 import { fruityType } from '@/types';
 import { Image } from 'expo-image';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function FruitDetails() {
-  const [fruitsDetails, setFruitDetails] = useState<fruityType | null>(null);
+  const [isOnFavorites, setIsOnFavorites] = useState<boolean>(false);
   const fruit = useSelector((state: RootState) => state.fruity.data);
+  const favorites = useSelector(
+    (state: RootState) => state.favorites.favoritesFruitz,
+  );
   const local = useLocalSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const fruitInfo = fruit.find((f: fruityType) => f.id === Number(local.id))!;
-    setFruitDetails({
-      ...fruitInfo,
-    });
-  }, []);
+    const isOnFavorites = favorites.some(
+      (favorite) => favorite.id === fruitsDetails.id,
+    );
+    if (isOnFavorites) {
+      setIsOnFavorites(true);
+    } else {
+      setIsOnFavorites(false);
+    }
+  }, [favorites, fruit]);
+
+  const fruitsDetails = fruit.find(
+    (f: fruityType) => f.id === Number(local.id),
+  )!;
+
+  const toggleFavorite = () => {
+    dispatch(switchOnFavorites(fruitsDetails));
+  };
 
   return fruitsDetails ? (
     <View>
@@ -27,6 +45,7 @@ export default function FruitDetails() {
         }}
       />
       <View style={styles.container}>
+        <FavoritesIcon handleFavorite={toggleFavorite} isFavorite={isOnFavorites}/>
         <FruitCardDetails fruitsDetails={fruitsDetails} />
       </View>
     </View>

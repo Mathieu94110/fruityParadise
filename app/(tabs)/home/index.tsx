@@ -25,34 +25,46 @@ export default function Page() {
     dispatch(fetchAllFruity());
   }
 
+  function getComponent() {
+    if (data.length) {
+      return (
+        <FlatList
+          data={data}
+          renderItem={({ item }: { item: fruityType }) => (
+            <FruityCard props={item} />
+          )}
+          keyExtractor={(item: fruityType) => String(item.id)}
+        />
+      );
+    }
+    if (isError) {
+      return <Text>Problem occurred while loading data</Text>;
+    }
+    return (
+      <View style={styles.spinnerContainer}>
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Fruits list' }} />
-      <View style={{ marginVertical: 40 }}>
-        {data.length ? (
-          <FlatList
-            data={data}
-            renderItem={({ item }: { item: fruityType }) => (
-              <FruityCard {...item} />
-            )}
-            keyExtractor={(item: fruityType) => String(item.id)}
-          />
-        ) : isError ? (
-          <Text>Problem occurred while loading data</Text>
-        ) : (
-          <View style={styles.spinnerContainer}>
-            <ActivityIndicator size="large" color="#00ff00" />
-          </View>
-        )}
-      </View>
+      {getComponent()}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   spinnerContainer: {
     flex: 1,
     justifyContent: 'center',
+    height: '100%',
   },
   title: {
     fontSize: 20,

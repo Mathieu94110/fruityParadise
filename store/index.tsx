@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import fruityReducer from './fruitySlice';
+import favoritesReducer from './favoritesSlice';
+
 export const store = configureStore({
   reducer: {
     fruity: fruityReducer,
+    favorites: favoritesReducer,
   },
 });
 
