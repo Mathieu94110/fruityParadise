@@ -25,7 +25,7 @@ export default function FruityCard({ props }: fruityType) {
 const styles = StyleSheet.create({
   itemContainer: {
     display: 'flex',
-    width: '75%',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 10,

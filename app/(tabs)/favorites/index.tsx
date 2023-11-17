@@ -10,7 +10,11 @@ export default function Page() {
   );
   function getComponent() {
     if (favorites.length) {
-      return <FruitsList list={favorites} />;
+      return (
+        <View>
+          <FruitsList list={favorites} />
+        </View>
+      );
     } else {
       return (
         <View style={styles.textContainer}>
