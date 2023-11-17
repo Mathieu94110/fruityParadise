@@ -13,7 +13,7 @@ function Layout() {
       <Tabs.Screen
         name="home"
         options={{
-          tabBarLabel: 'Accueil',
+          tabBarLabel: 'Home',
           tabBarIcon: ({ size, color }) => (
             <MaterialIcons name="home" size={size} color={color} />
           ),
@@ -22,7 +22,7 @@ function Layout() {
       <Tabs.Screen
         name="favorites"
         options={{
-          tabBarLabel: 'Favoris',
+          tabBarLabel: 'Favorites',
           tabBarIcon: ({ size, color }) => (
             <MaterialIcons name="favorite" size={size} color={color} />
           ),

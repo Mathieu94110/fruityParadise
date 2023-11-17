@@ -1,44 +1,77 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ActivityIndicator,
-  FlatList,
+  SafeAreaView,
+  TextInput,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Stack } from 'expo-router';
 import type { AppDispatch, RootState } from '@/store';
 import { fetchAllFruity } from '@/store/fruitySlice';
 import { fruityType } from '@/types';
-import FruityCard from '@/components/fruityCard';
+import FruitsList from '@/components/fruitsList';
 
 export default function Page() {
   const { data, isError } = useSelector((state: RootState) => state.fruity);
+  const [filteredData, setFilteredData] = useState<fruityType[]>([]);
+  const [search, setSearch] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     fetchAllFruits();
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      setFilteredData(data);
+    }
+  }, [data]);
+
   async function fetchAllFruits(): Promise<void> {
     dispatch(fetchAllFruity());
   }
 
+  function searchFilter(text: string) {
+    if (text) {
+      const newData = data.filter((item) => {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+      setSearch(text);
+    } else {
+      setFilteredData(data);
+      setSearch(text);
+    }
+  }
+
   function getComponent() {
-    if (data.length) {
+    if (filteredData.length) {
       return (
-        <FlatList
-          data={data}
-          renderItem={({ item }: { item: fruityType }) => (
-            <FruityCard props={item} />
-          )}
-          keyExtractor={(item: fruityType) => String(item.id)}
-        />
+        <View>
+          <TextInput
+            style={styles.textInput}
+            value={search}
+            placeholder="Search"
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => searchFilter(text)}
+          />
+          <FruitsList list={filteredData} />
+        </View>
       );
     }
     if (isError) {
-      return <Text>Problem occurred while loading data</Text>;
+      return (
+        <View style={styles.textContainer}>
+          <Text style={styles.errorText}>
+            Problem occurred while loading data
+          </Text>
+        </View>
+      );
     }
     return (
       <View style={styles.spinnerContainer}>
@@ -48,10 +81,10 @@ export default function Page() {
   }
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Fruits list' }} />
+    <SafeAreaView style={styles.container}>
+      <Stack.Screen options={{ title: 'Home' }} />
       {getComponent()}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -60,6 +93,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  textContainer: {
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textInput: {
+    height: 50,
+    paddingLeft: 20,
+    margin: 5,
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#FF385C',
   },
   spinnerContainer: {
     flex: 1,

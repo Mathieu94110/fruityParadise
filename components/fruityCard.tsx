@@ -24,8 +24,6 @@ export default function FruityCard({ props }: fruityType) {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#c2c2c2',
     display: 'flex',
     width: '75%',
     flexDirection: 'row',

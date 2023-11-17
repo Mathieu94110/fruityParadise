@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Stack } from 'expo-router';
 import type { RootState } from '@/store';
-import { fruityType } from '@/types';
-import FruityCard from '@/components/fruityCard';
+import FruitsList from '@/components/fruitsList';
 
 export default function Page() {
   const favorites = useSelector(
@@ -11,15 +10,7 @@ export default function Page() {
   );
   function getComponent() {
     if (favorites.length) {
-      return (
-        <FlatList
-          data={favorites}
-          renderItem={({ item }: { item: fruityType }) => (
-            <FruityCard props={item} />
-          )}
-          keyExtractor={(item: fruityType) => String(item.id)}
-        />
-      );
+      return <FruitsList list={favorites} />;
     } else {
       return (
         <View style={styles.textContainer}>
