@@ -1,6 +1,6 @@
 ﻿# FruityVice app (for Android, not tested with Ios systems)
 
-FruityVice app using ReactNative[Expo] and [Typescript] and (https://www.fruityvice.com//) api.
+FruityVice app using ReactNative[Expo] and [Typescript] and (https://www.fruityvice.com/) api.
 
 This project was created with followed commands npx create-expo-app (Expo App)
 
