@@ -3,8 +3,8 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { store } from '@/store';
 import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 export {
   // Catch any errors thrown by the Layout component.

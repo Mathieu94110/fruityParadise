@@ -2,7 +2,7 @@ import { fruityType } from '@/types';
 import { Image } from 'expo-image';
 import { View, Text, StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
-import { FRUITS_IMG } from '@/utils/cardCustomDesign';
+import FRUITS_IMG from '@/utils/cardCustomDesign';
 
 export default function FruitCardDetails({
   fruitsDetails,

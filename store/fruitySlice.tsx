@@ -24,7 +24,7 @@ export const fruitySlice = createSlice({
       state.isLoader = false;
       state.data = action.payload;
     });
-    builder.addCase(fetchAllFruity.rejected, (state, action) => {
+    builder.addCase(fetchAllFruity.rejected, (state) => {
       state.isLoader = false;
       state.isError = true;
     });

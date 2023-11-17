@@ -3,7 +3,7 @@ import React from 'react';
 import { fruityType } from '@/types';
 import FruityCard from './fruityCard';
 
-export default FruitsList = ({ list }: { list: fruityType[] }) => {
+export default function FruitsList({ list }: { list: fruityType[] }) {
   const ItemSeparatorView = () => {
     return (
       <View
@@ -15,10 +15,10 @@ export default FruitsList = ({ list }: { list: fruityType[] }) => {
     <FlatList
       data={list}
       renderItem={({ item }: { item: fruityType }) => (
-        <FruityCard props={item} />
+        <FruityCard id={item.id} name={item.name} />
       )}
       keyExtractor={(item: fruityType) => String(item.id)}
       ItemSeparatorComponent={ItemSeparatorView}
     />
   );
-};
+}

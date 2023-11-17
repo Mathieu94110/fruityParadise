@@ -3,8 +3,14 @@ import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 
-export default function FavoritesIcon({ handleFavorite, isFavorite }) {
-  const iconColor = (isOnFavorites: boolean) => {
+export default function FavoritesIcon({
+  handleFavorite,
+  isFavorite,
+}: {
+  handleFavorite: () => void;
+  isFavorite: boolean;
+}) {
+  const iconColor = (isOnFavorites: boolean): string => {
     return isOnFavorites ? Colors.primary : Colors.dark;
   };
   return (

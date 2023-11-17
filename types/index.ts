@@ -19,3 +19,6 @@ export type fruityState = {
   isLoader: boolean;
   isError: boolean;
 };
+export type favoritesState = {
+  favoritesFruitz: fruityType[];
+};

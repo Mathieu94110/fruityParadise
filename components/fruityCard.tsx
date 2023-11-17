@@ -2,10 +2,12 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { fruityType } from '@/types';
-import { FRUITS_IMG } from '@/utils/cardCustomDesign';
+import FRUITS_IMG from '@/utils/cardCustomDesign';
 
-export default function FruityCard({ props }: fruityType) {
-  const { name, id, ...rest } = props;
+export default function FruityCard({
+  name,
+  id,
+}: Pick<fruityType, 'name' | 'id'>) {
   return (
     <Link href={`/home/${id}`} asChild>
       <TouchableOpacity>

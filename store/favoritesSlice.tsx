@@ -1,9 +1,5 @@
-import { fruityType } from '@/types';
+import { fruityType, favoritesState } from '@/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
-interface favoritesState {
-  favoritesFruitz: fruityType[];
-}
 
 const initialState = { favoritesFruitz: [] } as favoritesState;
 

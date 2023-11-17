@@ -5,7 +5,7 @@ import { switchOnFavorites } from '@/store/favoritesSlice';
 import { fruityType } from '@/types';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function FruitDetails() {
@@ -32,7 +32,7 @@ export default function FruitDetails() {
     (f: fruityType) => f.id === Number(local.id),
   )!;
 
-  const toggleFavorite = () => {
+  const toggleFavorite = (): void => {
     dispatch(switchOnFavorites(fruitsDetails));
   };
 

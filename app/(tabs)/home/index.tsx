@@ -20,6 +20,7 @@ export default function Page() {
   );
   const [filteredData, setFilteredData] = useState<fruityType[]>([]);
   const [search, setSearch] = useState<string>('');
+  const [timeoutToClear, setTimeoutToClear] = useState<number>(0); // timer for debouncedSearch
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -32,25 +33,53 @@ export default function Page() {
     }
   }, [data]);
 
-  async function fetchAllFruits(): Promise<void> {
+  // used to avoid memory leaks
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeoutToClear);
+    };
+  }, []);
+  //
+  function fetchAllFruits(): void {
     dispatch(fetchAllFruity());
   }
 
-  function searchFilter(text: string) {
-    if (text) {
-      const newData = data.filter((item) => {
-        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredData(newData);
-      setSearch(text);
-    } else {
-      setFilteredData(data);
-      setSearch(text);
-    }
-  }
+  // debounce logic
+  const debounce = (
+    callback: unknown,
+    alwaysCall: (text: string) => void,
+    ms: number,
+  ) => {
+    return (...args) => {
+      alwaysCall(...args);
+      clearTimeout(timeoutToClear);
+      setTimeoutToClear(
+        setTimeout(() => {
+          callback(...args);
+        }, ms),
+      );
+    };
+  };
 
+  const changeText = (text: string) => {
+    setSearch(text);
+  };
+
+  const searchFruits = async (text: string) => {
+    console.log('called');
+    setSearch(text);
+    const filteredFruits = data.filter((fruit) => {
+      return fruit.name.toUpperCase().includes(text.toUpperCase());
+    });
+    setFilteredData(filteredFruits);
+  };
+
+  // here at every changes debounce() first will change search text input value,
+  // next clear timeoutToClear stop and reset timeoutToClear who finally call searchFruits after 1s
+  const debouncedSearch = debounce(searchFruits, changeText, 1000);
+  //
+
+  // logic for main view
   function getComponent() {
     if (data && !isLoader) {
       return (
@@ -60,7 +89,8 @@ export default function Page() {
             value={search}
             placeholder="Search"
             underlineColorAndroid="transparent"
-            onChangeText={(text) => searchFilter(text)}
+            onChangeText={debouncedSearch}
+            maxLength={12}
           />
           {filteredData.length ? (
             <FruitsList list={filteredData} />
@@ -95,6 +125,7 @@ export default function Page() {
     </SafeAreaView>
   );
 }
+//
 
 const styles = StyleSheet.create({
   container: {
