@@ -66,7 +66,6 @@ export default function Page() {
   };
 
   const searchFruits = async (text: string) => {
-    console.log('called');
     setSearch(text);
     const filteredFruits = data.filter((fruit) => {
       return fruit.name.toUpperCase().includes(text.toUpperCase());

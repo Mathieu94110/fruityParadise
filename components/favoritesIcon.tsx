@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
+import Colors from '../constants/Colors';
 
 export default function FavoritesIcon({
   handleFavorite,
@@ -17,9 +17,9 @@ export default function FavoritesIcon({
     <View>
       <MaterialIcons
         name="star"
-        size={24}
+        testID="star-icon"
+        size={28}
         color={iconColor(isFavorite)}
-        style={{ width: 40, height: 40 }}
         onPress={() => handleFavorite()}
       />
     </View>
