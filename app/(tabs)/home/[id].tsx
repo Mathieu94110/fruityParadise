@@ -3,7 +3,6 @@ import FruitCardDetails from '@/components/fruitCardDetails';
 import { AppDispatch, RootState } from '@/store';
 import { switchOnFavorites } from '@/store/favoritesSlice';
 import { fruityType } from '@/types';
-import { Image } from 'expo-image';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
@@ -45,7 +44,10 @@ export default function FruitDetails() {
         }}
       />
       <View style={styles.container}>
-        <FavoritesIcon handleFavorite={toggleFavorite} isFavorite={isOnFavorites}/>
+        <FavoritesIcon
+          handleFavorite={toggleFavorite}
+          isFavorite={isOnFavorites}
+        />
         <FruitCardDetails fruitsDetails={fruitsDetails} />
       </View>
     </View>

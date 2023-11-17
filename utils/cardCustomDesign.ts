@@ -79,4 +79,4 @@ const FRUITS_IMG = {
   Mangosteen:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Mangosteens_-_whole_and_opened.jpg/1920px-Mangosteens_-_whole_and_opened.jpg',
 };
-export { getFamilyDesign, FRUITS_IMG };
+export { FRUITS_IMG };

@@ -15,7 +15,9 @@ import { fruityType } from '@/types';
 import FruitsList from '@/components/fruitsList';
 
 export default function Page() {
-  const { data, isError } = useSelector((state: RootState) => state.fruity);
+  const { data, isError, isLoader } = useSelector(
+    (state: RootState) => state.fruity,
+  );
   const [filteredData, setFilteredData] = useState<fruityType[]>([]);
   const [search, setSearch] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
@@ -50,9 +52,9 @@ export default function Page() {
   }
 
   function getComponent() {
-    if (filteredData.length) {
+    if (data && !isLoader) {
       return (
-        <View>
+        <View style={{ flex: 1, width: '100%' }}>
           <TextInput
             style={styles.textInput}
             value={search}
@@ -60,7 +62,11 @@ export default function Page() {
             underlineColorAndroid="transparent"
             onChangeText={(text) => searchFilter(text)}
           />
-          <FruitsList list={filteredData} />
+          {filteredData.length ? (
+            <FruitsList list={filteredData} />
+          ) : (
+            <Text style={styles.errorText}>No fruits found</Text>
+          )}
         </View>
       );
     }
@@ -73,11 +79,13 @@ export default function Page() {
         </View>
       );
     }
-    return (
-      <View style={styles.spinnerContainer}>
-        <ActivityIndicator size="large" color="#00ff00" />
-      </View>
-    );
+    if (isLoader) {
+      return (
+        <View style={styles.spinnerContainer}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      );
+    }
   }
 
   return (
@@ -107,9 +115,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   errorText: {
+    height: '100%',
+    flex: 1,
     fontSize: 18,
     fontWeight: '600',
     color: '#FF385C',
+    textAlign: 'center',
+    marginTop: 60,
   },
   spinnerContainer: {
     flex: 1,

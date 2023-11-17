@@ -2,10 +2,10 @@ import { fruityState } from '@/types';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const baseURL = 'https://www.fruityvice.com/api/fruit';
-
+// isLoader is set to true in order to fruits not found text doesnt appear on home page loading
 const initialState = {
   data: [],
-  isLoader: false,
+  isLoader: true,
   isError: false,
 } as fruityState;
 
@@ -20,9 +20,6 @@ export const fruitySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllFruity.pending, (state, action) => {
-      state.isLoader = true;
-    });
     builder.addCase(fetchAllFruity.fulfilled, (state, action) => {
       state.isLoader = false;
       state.data = action.payload;
