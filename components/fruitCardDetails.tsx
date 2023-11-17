@@ -63,7 +63,6 @@ export default function FruitCardDetails({
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    width: '100%',
     marginHorizontal: 'auto',
   },
   headingText: {
@@ -75,7 +74,6 @@ const styles = StyleSheet.create({
     height: 420,
     borderRadius: 6,
     marginVertical: 12,
-    marginHorizontal: 16,
   },
   cardElevated: {
     backgroundColor: '#FFF',

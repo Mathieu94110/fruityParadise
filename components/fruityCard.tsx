@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Platform, Pressable } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { fruityType } from '@/types';
@@ -8,7 +8,7 @@ export default function FruityCard({ props }: fruityType) {
   const { name, id, ...rest } = props;
   return (
     <Link href={`/home/${id}`} asChild>
-      <Pressable>
+      <TouchableOpacity>
         <View style={styles.itemContainer}>
           <Text style={styles.nameText}>{name}</Text>
           <Image
@@ -17,7 +17,7 @@ export default function FruityCard({ props }: fruityType) {
             contentFit="cover"
           />
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </Link>
   );
 }
