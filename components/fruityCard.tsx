@@ -9,14 +9,16 @@ export default function FruityCard({
   id,
 }: Pick<fruityType, 'name' | 'id'>) {
   return (
-    <Link href={`/home/${id}`} asChild>
+    <Link href={`/home/${id}`} asChild  testID='fruit-link'>
       <TouchableOpacity>
         <View style={styles.itemContainer}>
           <Text style={styles.nameText}>{name}</Text>
           <Image
             style={styles.tinyLogo}
             source={FRUITS_IMG[name]}
+            accessibilityLabel={name}
             contentFit="cover"
+            testID='fruit-image'
           />
         </View>
       </TouchableOpacity>

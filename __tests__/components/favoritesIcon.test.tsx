@@ -3,10 +3,16 @@ import FavoritesIcon from '@/components/favoritesIcon';
 
 describe('favoritesIcon', () => {
   const mockFn = jest.fn();
-  it('render correctly', () => {
-    const tree = render(
+
+  const setup = () => {
+    const utils = render(
       <FavoritesIcon isFavorite={false} handleFavorite={mockFn} />,
     );
+    return { ...utils };
+  };
+
+  it('render correctly', () => {
+    const tree = setup();
     expect(tree).toMatchSnapshot();
   });
 
@@ -17,9 +23,7 @@ describe('favoritesIcon', () => {
   });
 
   it('should on icon click handleFavorite have been called and icon now having #1A1A1A color', () => {
-    const { getByTestId } = render(
-      <FavoritesIcon isFavorite={false} handleFavorite={mockFn} />,
-    );
+    const { getByTestId } = setup();
     const starIcon = getByTestId('star-icon');
     fireEvent.press(starIcon);
     expect(mockFn).toHaveBeenCalled();

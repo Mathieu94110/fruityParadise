@@ -14,6 +14,7 @@ export default function FruitsList({ list }: { list: fruityType[] }) {
   return (
     <FlatList
       data={list}
+      testID="flatlist"
       renderItem={({ item }: { item: fruityType }) => (
         <FruityCard id={item.id} name={item.name} />
       )}
