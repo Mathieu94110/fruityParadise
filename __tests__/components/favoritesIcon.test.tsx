@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react-native';
-import FavoritesIcon from '../../components/favoritesIcon';
+import FavoritesIcon from '@/components/favoritesIcon';
 
 describe('favoritesIcon', () => {
   const mockFn = jest.fn();
