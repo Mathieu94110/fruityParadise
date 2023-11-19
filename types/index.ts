@@ -14,6 +14,12 @@ export type fruityType = {
   nutritions: nutritionsType;
 };
 
+export type fruityCardProps = {
+  tab: 'home' | 'favorites';
+  name: string;
+  id: number;
+};
+
 export type fruityState = {
   data: fruityType[];
   isLoader: boolean;

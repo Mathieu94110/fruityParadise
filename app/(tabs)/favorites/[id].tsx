@@ -5,7 +5,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux';
 
-export default function HomeFruitDetails() {
+export default function FavoritesFruitDetails() {
   const fruit = useSelector((state: RootState) => state.fruity.data);
   const local = useLocalSearchParams();
 

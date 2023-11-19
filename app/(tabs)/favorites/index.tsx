@@ -12,7 +12,7 @@ export default function Page() {
     if (favorites.length) {
       return (
         <View>
-          <FruitsList list={favorites} />
+          <FruitsList list={favorites} tab="favorites" />
         </View>
       );
     } else {

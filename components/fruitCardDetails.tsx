@@ -47,7 +47,7 @@ export default function FruitCardDetails({
               </Text>
             </Text>
             <Text style={styles.nutritionsHeading}>Nutritions</Text>
-            <Text style={styles.cardNutritions} testID='nutritions-details'>
+            <Text style={styles.cardNutritions} testID="nutritions-details">
               {Object.entries(fruitsDetails.nutritions).map(([key, value]) => (
                 <View style={styles.nutritionsItem} key={key}>
                   <Text style={styles.nutritionsItemKey}>{key}</Text>

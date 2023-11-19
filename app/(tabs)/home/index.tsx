@@ -82,17 +82,17 @@ export default function Page() {
   function getComponent() {
     if (data && !isLoader) {
       return (
-        <View style={{ flex: 1, width: '100%' }}>
+        <View style={styles.searchContainer}>
           <TextInput
             style={styles.textInput}
             value={search}
-            placeholder="Search"
+            placeholder="Search by text"
             underlineColorAndroid="transparent"
             onChangeText={debouncedSearch}
             maxLength={12}
           />
           {filteredData.length ? (
-            <FruitsList list={filteredData} />
+            <FruitsList list={filteredData} tab="home" />
           ) : (
             <Text style={styles.errorText}>No fruits found</Text>
           )}
@@ -101,7 +101,7 @@ export default function Page() {
     }
     if (isError) {
       return (
-        <View style={styles.textContainer}>
+        <View style={styles.errorContainer}>
           <Text style={styles.errorText}>
             Problem occurred while loading data
           </Text>
@@ -124,7 +124,6 @@ export default function Page() {
     </SafeAreaView>
   );
 }
-//
 
 const styles = StyleSheet.create({
   container: {
@@ -132,10 +131,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textContainer: {
+  searchContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  errorContainer: {
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  spinnerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    height: '100%',
   },
   textInput: {
     height: 50,
@@ -152,11 +160,6 @@ const styles = StyleSheet.create({
     color: '#FF385C',
     textAlign: 'center',
     marginTop: 60,
-  },
-  spinnerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    height: '100%',
   },
   title: {
     fontSize: 20,
