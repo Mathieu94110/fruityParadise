@@ -11,7 +11,7 @@ describe('favoritesIcon', () => {
     return { ...utils };
   };
 
-  it('render correctly', () => {
+  it('should favoritesIcon render correctly', () => {
     const tree = setup();
     expect(tree).toMatchSnapshot();
   });

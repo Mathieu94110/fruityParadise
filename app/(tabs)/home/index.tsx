@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ActivityIndicator,
   SafeAreaView,
-  TextInput,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Stack } from 'expo-router';
@@ -13,14 +12,13 @@ import type { AppDispatch, RootState } from '@/store';
 import { fetchAllFruity } from '@/store/fruitySlice';
 import { fruityType } from '@/types';
 import FruitsList from '@/components/fruitsList';
+import SearchInput from '@/components/searchInput';
 
 export default function Page() {
   const { data, isError, isLoader } = useSelector(
     (state: RootState) => state.fruity,
   );
   const [filteredData, setFilteredData] = useState<fruityType[]>([]);
-  const [search, setSearch] = useState<string>('');
-  const [timeoutToClear, setTimeoutToClear] = useState<number>(0); // timer for debouncedSearch
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -33,64 +31,16 @@ export default function Page() {
     }
   }, [data]);
 
-  // used to avoid memory leaks
-  useEffect(() => {
-    return () => {
-      clearTimeout(timeoutToClear);
-    };
-  }, []);
-  //
   function fetchAllFruits(): void {
     dispatch(fetchAllFruity());
   }
-
-  // debounce logic
-  const debounce = (
-    callback: unknown,
-    alwaysCall: (text: string) => void,
-    ms: number,
-  ) => {
-    return (...args) => {
-      alwaysCall(...args);
-      clearTimeout(timeoutToClear);
-      setTimeoutToClear(
-        setTimeout(() => {
-          callback(...args);
-        }, ms),
-      );
-    };
-  };
-
-  const changeText = (text: string) => {
-    setSearch(text);
-  };
-
-  const searchFruits = async (text: string) => {
-    setSearch(text);
-    const filteredFruits = data.filter((fruit) => {
-      return fruit.name.toUpperCase().includes(text.toUpperCase());
-    });
-    setFilteredData(filteredFruits);
-  };
-
-  // here at every changes debounce() first will change search text input value,
-  // next clear timeoutToClear stop and reset timeoutToClear who finally call searchFruits after 1s
-  const debouncedSearch = debounce(searchFruits, changeText, 1000);
-  //
 
   // logic for main view
   function getComponent() {
     if (data && !isLoader) {
       return (
         <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.textInput}
-            value={search}
-            placeholder="Search by text"
-            underlineColorAndroid="transparent"
-            onChangeText={debouncedSearch}
-            maxLength={12}
-          />
+          <SearchInput fruits={data} setFilteredData={setFilteredData} />
           {filteredData.length ? (
             <FruitsList list={filteredData} tab="home" />
           ) : (
@@ -144,13 +94,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     height: '100%',
-  },
-  textInput: {
-    height: 50,
-    paddingLeft: 20,
-    margin: 5,
-    backgroundColor: '#FFF',
-    borderWidth: 1,
   },
   errorText: {
     height: '100%',

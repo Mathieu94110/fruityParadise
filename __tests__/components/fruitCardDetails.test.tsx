@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react-native';
+import renderer from 'react-test-renderer';
 import FruitCardDetails from '@/components/fruitCardDetails';
 import { fruityType } from '@/types';
 
@@ -21,6 +22,13 @@ describe('favoritesIcon', () => {
     const utils = render(<FruitCardDetails fruitsDetails={kiwi} />);
     return { ...utils };
   };
+
+  it('should render fruitCardDetails correctly', () => {
+    const rendered = renderer
+      .create(<FruitCardDetails fruitsDetails={kiwi} />)
+      .toJSON();
+    expect(rendered).toBeTruthy();
+  });
 
   it('should text kiwi be on screen', () => {
     const { getByText } = setup();

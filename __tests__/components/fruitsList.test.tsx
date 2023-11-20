@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react-native';
+import renderer from 'react-test-renderer';
 import FruitsList from '@/components/fruitsList';
 import { fruityType } from '@/types';
 
@@ -52,6 +53,13 @@ describe('fruitsList', () => {
     const utils = render(<FruitsList list={myList} tab="home" />);
     return { ...utils };
   };
+
+  it('should render fruitsList correctly', () => {
+    const rendered = renderer
+      .create(<FruitsList list={myList} tab="home" />)
+      .toJSON();
+    expect(rendered).toBeTruthy();
+  });
   it('should list exist and having 3 childs with the right properties', () => {
     const { getByTestId } = setup();
     expect(getByTestId('flatlist')).toBeDefined();
